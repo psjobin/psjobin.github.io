@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobin Scaria</title>
+</head>
+
+<body onload="loadCharlieImage();">
+    <div onclick="ShowMainPage();" style="cursor: pointer; font-size: 50px;">🔙</div>
+
+    <img id="CharlieImg" alt="Charlie" />
+
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+
+    <script>
+        function ShowMainPage() {
+            window.location.href = "/index.html";
+        }
+        function loadCharlieImage() {
+            let Img = Math.floor((Math.random() * 6) + 0);
+            document.getElementById("CharlieImg").src = "images/charlie/" + Img + ".jpg";
+        }
+    </script>
+</body>
+
+</html>
