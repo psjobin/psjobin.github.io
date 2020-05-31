@@ -25,12 +25,13 @@
             target="_blank">Stack Overflow</a></div>
         <div class="menu-item"><a href="https://github.com/psj01" id="github" target="_blank">GitHub</a></div>
         <div class="EmojiDiv">
-          <span title="I love tech.">💻</span>
-          <span title="Travel the world.">🗺️</span>
-          <span title="Love science.">🔬</span>
-          <span title="Love eachother.">❤️</span>
-          <span title="Yoga is good for the soul.">🧘🏼‍♂️</span>
-          <span title="Oh...did I mention I love dogs... Click for prwoof!" onclick="ShowCharlie();">🐕</span>
+          <span title="I love tech." onmouseover="hmm(this);">💻</span>
+          <span title="Travel the world." onmouseover="hmm(this);">🗺️</span>
+          <span title="Love science." onmouseover="hmm(this);">🔬</span>
+          <span title="Love eachother." onmouseover="hmm(this);">❤️</span>
+          <span title="Yoga is good for the soul." onmouseover="hmm(this);">🧘🏼‍♂️</span>
+          <span title="Oh...did I mention I love dogs... Click for prwoof!" onmouseover="hmm(this);"
+            onclick="ShowCharlie();">🐕</span>
         </div>
       </td>
 
@@ -175,6 +176,16 @@
     function ShowCharlie() {
       window.location.href = "/charlie.html";
     }
+
+    function hmm(x) {
+      x.style.cursor = 'progress';
+      setTimeout(() => resetCursor(x), 1000);
+    }
+
+    function resetCursor(x) {
+      x.style.cursor = 'default';
+    }
+
   </script>
 
 </body>
