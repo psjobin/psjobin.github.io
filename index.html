@@ -25,14 +25,15 @@
             target="_blank">Stack Overflow</a></div>
         <div class="menu-item"><a href="https://github.com/psjobin" id="github" target="_blank">GitHub</a></div>
         <div class="EmojiDiv">
-          <span title="I love tech." onmouseover="hmm(this);">💻</span>
-          <span title="Travel the world." onmouseover="hmm(this);">🗺️</span>
-          <span title="Share knowledge." onmouseover="hmm(this);">👨‍🏫</span>
-          <span title="Love each other." onmouseover="hmm(this);">❤️</span>
-          <span title="Yoga is good for the soul." onmouseover="hmm(this);">🧘🏼‍♂️</span>
-          <span title="Oh...did I mention I love dogs... Click for prwoof!" onmouseover="hmm(this);"
-            onclick="ShowCharlie();">🐕</span>
+          <span onmouseover="hmmShow('I love tech.');" onmouseout="hmmHide();" style="cursor:pointer;">💻</span>
+          <span onmouseover="hmmShow('Travel the world.');" onmouseout="hmmHide();" style="cursor:pointer;">🗺️</span>
+          <span onmouseover="hmmShow('Share knowledge.');" onmouseout="hmmHide();" style="cursor:pointer;">👨‍🏫</span>
+          <span onmouseover="hmmShow('Love each other.');" onmouseout="hmmHide();" style="cursor:pointer;">❤️</span>
+          <span onmouseover="hmmShow('Yoga is good for the soul.');" onmouseout="hmmHide();" style="cursor:pointer;">🧘🏼‍♂️</span>
+          <span onmouseover="hmmShow('Oh...did I mention I love dogs... Click for prwoof!');" style="cursor:pointer;"
+          onmouseout="hmmHide();" onclick="ShowCharlie();">🐕</span>          
         </div>
+        <div style="margin-top:20px;border-radius:5px;padding-left:5px;font-size: x-small;background-color:black;color:white;font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;width:140px;word-break:break-word;word-wrap: break-word;white-space: normal;" id="hmmMsg"></div>
       </td>
 
       <td id="layout-content">
@@ -184,13 +185,12 @@
       window.location.href = "/charlie.html";
     }
 
-    function hmm(x) {
-      x.style.cursor = 'progress';
-      setTimeout(() => resetCursor(x), 500);
+    function hmmShow(x) {
+      document.getElementById("hmmMsg").innerText = x;
     }
 
-    function resetCursor(x) {
-      x.style.cursor = 'default';
+    function hmmHide(x) {
+      document.getElementById("hmmMsg").innerText = "";
     }
 
   </script>
