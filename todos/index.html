@@ -76,11 +76,11 @@
             if (status) {
 
                 li.innerHTML = `<button id="${x}" title="delete item"
-                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>${x}<input type="checkbox" checked title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
+                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>&nbsp;&nbsp;${x}&nbsp;&nbsp;<input type="checkbox" checked title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
             } else {
 
                 li.innerHTML = `<button  id="${x}" title="delete item"
-                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>${x}<input type="checkbox" title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
+                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>&nbsp;&nbsp;${x}&nbsp;&nbsp;<input type="checkbox" title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
             }
 
             var ul = document.getElementById("ulItems");
