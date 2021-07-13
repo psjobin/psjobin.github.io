@@ -168,6 +168,8 @@
                 }
             }
             p = p.slice(0, -1);
+            d = encodeURIComponent(d);
+            p = encodeURIComponent(p);
             document.getElementById("hiddenTa").value = `https://psjobin.github.io/todos/index.html?d=${d}&p=${p}`;
 
 
