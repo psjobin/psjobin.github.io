@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To Do List</title>
 </head>
 <style>
     .done {
         background-color: green;
 
     }
+
+    input[type='checkbox'] { 
+    width:12px;
+    height:12px; 
+}
 </style>
 
 <body>
@@ -70,12 +75,12 @@
 
             if (status) {
 
-                li.innerHTML = `${x}<input type="checkbox" checked id="${x}" onclick="toggleMe(this)"> <button id="${x}"
-                onclick="DeleteItem(this)" style="color: red;">x</button>`;
+                li.innerHTML = `<button id="${x}" title="delete item"
+                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>${x}<input type="checkbox" checked title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
             } else {
 
-                li.innerHTML = `${x}<input type="checkbox" id="${x}" onclick="toggleMe(this)"> <button  id="${x}"
-                onclick="DeleteItem(this)" style="color: red;">x</button>`;
+                li.innerHTML = `<button  id="${x}" title="delete item"
+                onclick="DeleteItem(this)" style="color: red;width:20px;height:20px;">-</button>${x}<input type="checkbox" title="mark item as done or pending" id="${x}" onclick="toggleMe(this)"> `;
             }
 
             var ul = document.getElementById("ulItems");
