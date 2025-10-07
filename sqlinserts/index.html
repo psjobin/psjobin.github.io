@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>SQL Insert Generator</title>
+      <style>
+         body {
+         font-family: Arial, sans-serif;
+         margin: 20px;
+         background-color: #f4f4f9;
+         }
+         .container {
+         max-width: 800px;
+         margin: auto;
+         background: #fff;
+         padding: 20px;
+         border-radius: 8px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         }
+         input[type="text"],
+         textarea {
+         width: 100%;
+         padding: 10px;
+         margin-bottom: 10px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         box-sizing: border-box;
+         }
+         button {
+         padding: 10px 15px;
+         background-color: #007bff;
+         color: white;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         margin-right: 10px;
+         }
+         button:hover {
+         background-color: #0056b3;
+         }
+         button:disabled {
+         background-color: gray;
+         cursor: default;
+         }
+         table {
+         width: 100%;
+         border-collapse: collapse;
+         margin-top: 20px;
+         }
+         th,
+         td {
+         border: 1px solid #ddd;
+         padding: 8px;
+         text-align: left;
+         }
+         th {
+         background-color: #f2f2f2;
+         }
+         #tableNameDisplay {
+         font-size: 1.5em;
+         font-weight: bold;
+         margin-bottom: 10px;
+         text-align: center;
+         color: #333;
+         }
+         #sqlOutput {
+         margin-top: 20px;
+         padding: 10px;
+         background-color: #e9ecef;
+         border: 1px dashed #6c757d;
+         border-radius: 4px;
+         white-space: pre-wrap;
+         font-family: monospace;
+         font-size: 0.9em;
+         max-height: 300px;
+         overflow-y: auto;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <h1>SQL Generator Tool</h1>
+         <button id="resetBtn">RESET</button>
+         <h2>1. Table Name</h2>
+         <input type="text" id="tableNameInput" placeholder="Enter Table Name (e.g., users)">
+         <button id="btnUpdateTableName" onclick="updateTableName()">Set Table Name</button>
+         <hr>
+         <h2>2. Columns</h2>
+         <input type="text" id="columnsInput" placeholder="Enter columns (e.g., id, first_name, email)">
+         <button id="btngenerateTableHeaders" onclick="generateTableHeaders()">Generate Table Headers</button>
+         <hr>
+         <div id="tableNameDisplay"></div>
+         <table id="dynamicTable"></table>
+         <hr>
+         <h2>3. Data Rows</h2>
+         <p>Enter data rows, one array of comma-separated values per line. **Separate rows with a newline.**</p>
+         <textarea id="dataInput" rows="5"
+            placeholder="Enter data rows here. Example:&#10;1, John Doe, john@example.com&#10;2, Jane Smith, jane@test.com"></textarea>
+         <button onclick="generateSQL()">Generate SQL INSERT Statement</button>
+         <hr>
+         <h2>4. SQL INSERT Statement</h2>
+         <div id="sqlOutput"></div>
+      </div>
+      <script>
+         let tableName = "";
+         let columns = [];
+         
+         // Step 1: Update Table Name
+         function updateTableName() {
+             tableName = document.getElementById('tableNameInput').value.trim();
+             const display = document.getElementById('tableNameDisplay');
+             if (tableName) {
+                 display.textContent = `Table: ${tableName}`;
+                 document.getElementById('tableNameInput').disabled = true;
+                 document.getElementById('btnUpdateTableName').disabled = true;
+             } else {
+                 display.textContent = "Please set a table name.";
+             }
+         }
+         
+         // Step 2: Generate Table Headers
+         function generateTableHeaders() {
+             const columnsString = document.getElementById('columnsInput').value;
+             columns = columnsString.split(',').map(col => col.trim()).filter(col => col.length > 0);
+         
+             const table = document.getElementById('dynamicTable');
+             table.innerHTML = ""; // Clear existing table content
+         
+             if (columns.length === 0) {
+                 return;
+             }
+         
+             // Create Header Row
+             const thead = table.createTHead();
+             const row = thead.insertRow();
+             columns.forEach(col => {
+                 const th = document.createElement('th');
+                 th.textContent = col;
+                 row.appendChild(th);
+             });
+         
+             // Optional: Also clear SQL output as data structure changed
+             document.getElementById('sqlOutput').textContent = "";
+         
+         
+             document.getElementById('columnsInput').disabled = true;
+             document.getElementById('btngenerateTableHeaders').disabled = true;
+         
+         }
+         
+         // Step 3 & 4: Generate SQL INSERT Statement
+         function generateSQL() {
+             if (!tableName) {
+                 alert("Please set a table name first.");
+                 return;
+             }
+             if (columns.length === 0) {
+                 alert("Please set columns first.");
+                 return;
+             }
+         
+             const dataString = document.getElementById('dataInput').value.trim();
+             if (!dataString) {
+                 document.getElementById('sqlOutput').textContent = "No data entered to generate SQL.";
+                 return;
+             }
+         
+             // Split data into rows, then split each row into values
+             const dataRows = dataString.split('\n')
+                 .map(line => line.trim())
+                 .filter(line => line.length > 0)
+                 .map(line => line.split(',').map(val => val.trim()));
+         
+             let valid = true;
+             dataRows.forEach(dataRow => {
+                 if (dataRow.length === columns.length) {
+         
+                 } else {
+                     console.log("columns are : " + columns + " and data row is: " + dataRow)
+                     valid = false;
+                 }
+             });
+         
+             if (valid) {
+         
+                 let sql = "";
+                 // const columnsClause = `(${columns.join(', ')})`; 
+                 const columnsClause = `(${columns.map(col => {
+                     if (col.includes(' ')) {
+                         return `"${col}"`;
+                     }
+                     return col;
+                 }).join(', ')})`;
+         
+                 // Build the multi-row INSERT statement
+                 sql += `INSERT INTO ${tableName} ${columnsClause} VALUES\n`;
+         
+                 const valuesClauses = dataRows.map(row => {
+                     // Escape values for SQL (e.g., wrap strings in quotes)
+                     const values = row.map(val => {
+                         // Simple check: if it looks like a number, don't quote it, otherwise quote it.
+                         // if (!isNaN(val) && val !== '') {
+                         //     return val;
+                         // }
+                         // Quote and escape single quotes within the string
+                         return `'${val.replace(/'/g, "''")}'`;
+                     });
+                     return `(${values.join(', ')})`;
+                 });
+         
+                 sql += valuesClauses.join(',\n');
+                 sql += ";";
+         
+                 document.getElementById('sqlOutput').textContent = sql;
+             } else {
+                 document.getElementById('sqlOutput').textContent = "Error with the provided data and columns specified.";
+             }
+         
+         
+         }
+         
+         
+         document.getElementById("resetBtn").addEventListener("click", () => {
+             location.reload();
+         });
+         
+      </script>
+   </body>
+</html>
